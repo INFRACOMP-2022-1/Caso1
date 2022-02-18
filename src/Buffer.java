@@ -10,6 +10,10 @@ public class Buffer {
         this.buffer = new LinkedList<>();
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public synchronized boolean hasMessages(){
         return this.buffer.size() > 0;
     }
@@ -43,7 +47,7 @@ public class Buffer {
 
         //Retirar el mensaje
         String message = this.buffer.remove(0);
-        notify();
+        notifyAll();
 
         //Entregar
         return message;
