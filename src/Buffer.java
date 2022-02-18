@@ -18,7 +18,11 @@ public class Buffer {
         return this.buffer.size() > 0;
     }
 
+
     public synchronized void insertMessage(String message){
+
+        //this.buffer.size() -> contador de cuantos mensajes dentro del buffer vamos
+        //this.size() -> referenica el tamaño maximo de mensajes que puede tener un buffer
         while(this.buffer.size() == this.size){
             try {
                 wait();//protected wait
@@ -47,7 +51,7 @@ public class Buffer {
 
         //Retirar el mensaje
         String message = this.buffer.remove(0);
-        notifyAll();
+        notify();
 
         //Entregar
         return message;
