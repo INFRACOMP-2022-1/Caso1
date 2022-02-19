@@ -9,7 +9,7 @@
 	/**
 	 * The buffer to which the message is sent to
 	 */
-	private Buffer bfReciever;
+	private Buffer bfReceiver;
 
 	/**
 	 * The message that is being colected and sent
@@ -19,12 +19,12 @@
 	/**
 	 * Id of the thread responsible for transporting the message between buffers
 	 */
-	private int ID;
+	private int id;
 
 	/**
 	 * Boolean that represents what form of comunication is the thread suposed to use. If true its active comunication, else its pasive.
 	 */
-	private boolean activeComunication;
+	private boolean activeCommunication;
 
 	/**
 	 * The time in miliseconds that the thread is sent to sleep when procesing the transport of the message between buffers
@@ -32,25 +32,87 @@
 	private int sleepTime;
 
 
+
+	//-------------------------------------------------------------------------------------------------
+	// CONSTRUCTOR
+	//-------------------------------------------------------------------------------------------------
+
 	/**
 	 * It creates a new producer consumer object that is responsible for the reception and
 	 * transmision of messages through the network of buffers
-	 * @param ID the ID of the current thread (it goes from 1 to 4)
+	 * @param id the id of the current thread (it goes from 1 to 4)
 	 * @param bfMessenger the messenger buffer, from where the message is recieved by the producerConsumer
-	 * @param bfReciever the reciever buffer, where the producerConsumer will send the message once its proccesed
+	 * @param bfReceiver the reciever buffer, where the producerConsumer will send the message once its proccesed
 	 * @param message the message that is going to be transmited by the thread from one buffer to the other
 	 * @param sleepTime the time that the thread will be sent to sleep while it "processes" the message transmition from buffer to buffer
-	 * @param activeComunication it specifies if the current thread type of comunication. If true its active comunicatio, if false its pasive comunication.
+	 * @param activeCommunication it specifies if the current thread type of comunication. If true its active comunicatio, if false its pasive comunication.
 	 */
-	public ProducerConsumer( int ID,Buffer bfMessenger,Buffer bfReciever,String message, int sleepTime,boolean activeComunication)
+	public ProducerConsumer( int id,Buffer bfMessenger,Buffer bfReceiver,String message, int sleepTime,boolean activeCommunication)
 	{
 		this.message=message;
-		this.bfReciever=bfReciever;
+		this.bfReceiver=bfReceiver;
 		this.bfMessenger=bfMessenger;
-		this.ID=ID;
+		this.id=id;
 		this.sleepTime = sleepTime;
-		this.activeComunication = activeComunication;
+		this.activeCommunication = activeCommunication;
 	}
+
+	//-------------------------------------------------------------------------------------------------
+	// SETTERS AND GETTERS
+	//-------------------------------------------------------------------------------------------------
+
+	public Buffer getBfMessenger() {
+		return bfMessenger;
+	}
+
+	public void setBfMessenger(Buffer bfMessenger) {
+		this.bfMessenger = bfMessenger;
+	}
+
+	public Buffer getBfReciever() {
+		return bfReceiver;
+	}
+
+	public void setBfReciever(Buffer bfReceiver) {
+		this.bfReceiver = bfReceiver;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public int getid() {
+		return id;
+	}
+
+	public void setid(int id) {
+		this.id = id;
+	}
+
+	public boolean isActiveComunication() {
+		return activeCommunication;
+	}
+
+	public void setActiveCommunication(boolean activeCommunication) {
+		this.activeCommunication = activeCommunication;
+	}
+
+	public int getSleepTime() {
+		return sleepTime;
+	}
+
+	public void setSleepTime(int sleepTime) {
+		this.sleepTime = sleepTime;
+	}
+
+
+	//-------------------------------------------------------------------------------------------------
+	// METHODS
+	//-------------------------------------------------------------------------------------------------
 
 	/**
 	 * Processes a message recieved from the messenger buffer, once on is available to be colected,
@@ -65,7 +127,7 @@
 		// DEFINIR Y PENSAR COMO Y CUANDO SE DEBE PONER PASIVO Y ACTIVO   3P-2A-hola
 		if (messageC !="FIN")
 		{
-			String marcador= Integer.toString(ID);
+			String marcador= Integer.toString(id);
 			messageC=marcador+"AP"+"-"+messageC;
 		}
 
@@ -73,7 +135,7 @@
 		Thread.sleep(sleepTime);
 
 		//Sends modified message to the new
-		bfReciever.insertMessage(messageC);
+		bfReceiver.insertMessage(messageC);
 	}
 	
 	
