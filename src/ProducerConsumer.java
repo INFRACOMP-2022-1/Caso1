@@ -1,8 +1,12 @@
-
-    public class ProducerConsumer extends Thread
+/**
+ * Class that represents the entity of a producer consumer thread, which is in charge of transporting a message from
+ * a messenger buffer to a receiver buffer whilst doing a modification and obeying the type of transmission specified
+ * by parameter
+ */
+public class ProducerConsumer extends Thread
 {
 	/**
-	 * The buffer from which the message is recieved from
+	 * The buffer from which the message is received from
 	 */
 	private Buffer bfMessenger;
 
@@ -12,7 +16,7 @@
 	private Buffer bfReceiver;
 
 	/**
-	 * The message that is being colected and sent
+	 * The message that is being collected and sent
 	 */
 	private String message;
 
@@ -22,12 +26,12 @@
 	private int id;
 
 	/**
-	 * Boolean that represents what form of comunication is the thread suposed to use. If true its active comunication, else its pasive.
+	 * Boolean that represents what form of communication is the thread supposed to use. If true its active communication, else its passive.
 	 */
 	private boolean activeCommunication;
 
 	/**
-	 * The time in miliseconds that the thread is sent to sleep when procesing the transport of the message between buffers
+	 * The time in milliseconds that the thread is sent to sleep when processing the transport of the message between buffers
 	 */
 	private int sleepTime;
 
@@ -39,13 +43,13 @@
 
 	/**
 	 * It creates a new producer consumer object that is responsible for the reception and
-	 * transmision of messages through the network of buffers
+	 * transmission of messages through the network of buffers
 	 * @param id the id of the current thread (it goes from 1 to 4)
-	 * @param bfMessenger the messenger buffer, from where the message is recieved by the producerConsumer
-	 * @param bfReceiver the reciever buffer, where the producerConsumer will send the message once its proccesed
-	 * @param message the message that is going to be transmited by the thread from one buffer to the other
-	 * @param sleepTime the time that the thread will be sent to sleep while it "processes" the message transmition from buffer to buffer
-	 * @param activeCommunication it specifies if the current thread type of comunication. If true its active comunicatio, if false its pasive comunication.
+	 * @param bfMessenger the messenger buffer, from where the message is received by the producerConsumer
+	 * @param bfReceiver the receiver buffer, where the producerConsumer will send the message once its processed
+	 * @param message the message that is going to be transmitted by the thread from one buffer to the other
+	 * @param sleepTime the time that the thread will be sent to sleep while it "processes" the message transmission from buffer to buffer
+	 * @param activeCommunication it specifies if the current thread type of communication. If true its active communication, if false its passive communication.
 	 */
 	public ProducerConsumer( int id,Buffer bfMessenger,Buffer bfReceiver,String message, int sleepTime,boolean activeCommunication)
 	{
@@ -69,11 +73,11 @@
 		this.bfMessenger = bfMessenger;
 	}
 
-	public Buffer getBfReciever() {
+	public Buffer getBfReceiver() {
 		return bfReceiver;
 	}
 
-	public void setBfReciever(Buffer bfReceiver) {
+	public void setBfReceiver(Buffer bfReceiver) {
 		this.bfReceiver = bfReceiver;
 	}
 
@@ -89,11 +93,11 @@
 		return id;
 	}
 
-	public void setid(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public boolean isActiveComunication() {
+	public boolean isActiveCommunication() {
 		return activeCommunication;
 	}
 
