@@ -131,6 +131,10 @@ public class ProducerConsumer extends Thread
 		// DEFINIR Y PENSAR COMO Y CUANDO SE DEBE PONER PASIVO Y ACTIVO   3P-2A-hola
 		if (messageC !="FIN")
 		{
+			//TODO: Append message Cuando un proceso recibe un mensaje, le
+			//agrega un texto para indicar que el mensaje pasó por ahí. El texto debe incluir el identificador del proceso y una
+			//marca para identificar el tipo de envío y recepción que realiza el proceso. Por ejemplo “1AS” sería un texto que podría
+			//indicar que el proceso 1 recibió el mensaje de forma PASIVA y lo transmitió de forma ACTIVA
 			String marcador= Integer.toString(id);
 			messageC=marcador+"AP"+"-"+messageC;
 		}
