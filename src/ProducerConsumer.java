@@ -1,41 +1,54 @@
 
     public class ProducerConsumer extends Thread
 {
-	private Buffer bfmensajero;
-	private Buffer bfreceptor;
-	private String mensaje;
+	//The buffer from which the message is recieved from
+	private Buffer bfMessenger;
+
+	//The buffer to which the message is sent to 
+	private Buffer bfReciever;
+
+	//The message that is being colected and sent
+	private String message;
+
+	//Id of the thread responsible for transporting the message between buffers
 	private int ID;
+
+	//Boolean that represents what form of comunication is the thread suposed to use. If true its active comunication, else its pasive.
+	private boolean activeComunication;
+
+	//The time in miliseconds that the thread is sent to sleep when procesing the transport of the message between buffers
+	private int sleepTime;
 
 	
 	
 	
-	public ProducerConsumer( int ID,Buffer bfmensajero,Buffer bfreceptor,String mensaje) 
+	public ProducerConsumer( int ID,Buffer bfMessenger,Buffer bfReciever,String message, int sleepTime,boolean comunicacionActiva) 
 	{
-		this.mensaje=mensaje;
-		this.bfreceptor=bfreceptor;
-		this.bfmensajero=bfmensajero;
+		this.message=message;
+		this.bfReciever=bfReciever;
+		this.bfMessenger=bfMessenger;
 		this.ID=ID;
-	
-	
+		this.sleepTime = sleepTime;
+		this.comunicacionActiva = comunicacionActiva;
 	}
 	
 	
-	public synchronized void procesar_mensaje() 
+	public synchronized void procesar_message() 
 	{
-		String mensajeC=bfmensajero.retrieveMessages();
+		String messageC=bfMessenger.retrieveMessages();
 		
-		if (mensajeC !="FIN")
+		if (messageC !="FIN")
 		{
 			String marcador= Integer.toString(ID);
 			// DEFINIR Y PENSAR COMO Y CUANDO SE DEBE PONER PASIVO Y ACTIVO   3P-2A-hola
 			
-			mensajeC=marcador+"AP"+"-"+mensajeC;
+			messageC=marcador+"AP"+"-"+messageC;
 			
 		}
 		
 		
 		
-		bfreceptor.insertMessage(mensajeC);
+		bfReciever.insertMessage(messageC);
 	
 	}
 	
