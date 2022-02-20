@@ -75,12 +75,7 @@ public class ProducerConsumer {
      * @throws InterruptedException exception
      */
     public void receiveMessage() throws InterruptedException {
-        if(activeReception){
-            currentMessage = originBuffer.popMessageActive();
-        }
-        else{
-            currentMessage = originBuffer.popMessagePassive();
-        }
+        currentMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
     }
 
     /**
@@ -110,12 +105,10 @@ public class ProducerConsumer {
      * @throws InterruptedException
      */
     public void emmitMessage() throws InterruptedException {
-        if(activeEmission){
+        if(activeEmission)
             destinationBuffer.putMessageActive(currentMessage);
-        }
-        else{
+        else
             destinationBuffer.putMessagePassive(currentMessage);
-        }
     }
 
     /**
