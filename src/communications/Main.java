@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -12,14 +11,25 @@ import java.util.Scanner;
  */
 public class Main {
 
+    //-------------------------------------------------------------------------------------------------
+    // ATTRIBUTES
+    //-------------------------------------------------------------------------------------------------
+
     //TODO ; Terminar configuracion y poner algo para poner a correr los processos y coordinarlos
     //TODO: TERMINAR LA EJECUCION DE LOS PROCESOS ,USAR BARRERASCICLICAS O ALGO
+
     public final static String fileName = "Caso1/inputFile.txt";
 
     public static HashMap<String,Buffer> bufferList;
 
     public static HashMap<String,ProducerConsumer> producerConsumersList;
 
+    public static int numberOfMessages;
+
+
+    //-------------------------------------------------------------------------------------------------
+    // MAIN METHOD
+    //-------------------------------------------------------------------------------------------------
 
 
     //TODO : Declare parameters for all the qualities of the buffers and the processes
@@ -32,7 +42,10 @@ public class Main {
         //Parses the input file txt content and creates the producerConsumers and the Buffers
         parseConsoleInput();
 
-        System.out.println("The input configuration has been completed");
+        System.out.println("The input configuration has been completed/n");
+
+        //Reads the number of messages that are going to be sent by process 1
+        scanConsoleInputNumberMessages();
 
         //TODO: START CYCLIC BARRIER HERE
 
@@ -48,7 +61,13 @@ public class Main {
         //TODO: WRITE RESULTS SOMEWHERE?
     }
 
+    //-------------------------------------------------------------------------------------------------
+    // AUXILIARY METHODS
+    //-------------------------------------------------------------------------------------------------
 
+    /**
+     * Parses the content of the inputFile.txt creates the corresponding buffers and producer consumers
+     */
     public static void parseConsoleInput(){
         ArrayList<String> rawInput = readInputFile();
         bufferList = new HashMap<>();
@@ -81,6 +100,20 @@ public class Main {
         }
     }
 
+    /**
+     * Scans the console input for the number of messages
+     */
+    public static void scanConsoleInputNumberMessages(){
+       Scanner sc = new Scanner(System.in);
+       System.out.println("Enter the number of messages to be sent by process 1: ");
+       numberOfMessages = sc.nextInt();
+    }
+
+    /**
+     * This takes a string with a buffer configuration and then creates a buffer reflecting those parameters
+     * @param specifications a string containing all the information to create a buffer
+     * @return A buffer with the parameters specified by the string.
+     */
     public static Buffer createBuffer(String specifications){
         String[] formattedStr = specifications.split(" ");
         String bufferId = formattedStr[0];
