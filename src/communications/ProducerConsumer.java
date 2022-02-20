@@ -1,6 +1,6 @@
 package communications;
 
-public class ProducerConsumer extends Thread {
+public class ProducerConsumer {
     //-------------------------------------------------------------------------------------------------
     // ATTRIBUTES
     //-------------------------------------------------------------------------------------------------

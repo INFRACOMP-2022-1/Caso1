@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>communications</OriginalElement>
+  <nodes>
+    <node x="44.23718801469643" y="177.8152793614596">communications.ProducerConsumer</node>
+    <node x="-387.0575826681869" y="434.0193842645383">communications.Buffer</node>
+    <node x="-458.5575826681869" y="118.0034207525656">communications.Main</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="communications.Main" target="communications.Buffer" relationship="CREATE">
+      <point x="-15.0" y="115.5" />
+      <point x="-15.0" y="-192.5" />
+    </edge>
+    <edge source="communications.Main" target="communications.ProducerConsumer" relationship="CREATE">
+      <point x="190.5" y="0.0" />
+      <point x="-113.49999999999999" y="-246.811858608894" />
+    </edge>
+    <edge source="communications.ProducerConsumer" target="communications.Buffer" relationship="DEPENDENCY">
+      <point x="-113.49999999999999" y="0.0" />
+      <point x="119.0" y="-146.2041049030787" />
+    </edge>
+    <edge source="communications.ProducerConsumer" target="communications.Buffer" relationship="TO_ONE">
+      <point x="-113.49999999999999" y="146.2041049030787" />
+      <point x="119.0" y="0.0" />
+    </edge>
+    <edge source="communications.Main" target="communications.Buffer" relationship="TO_MANY">
+      <point x="0.0" y="115.5" />
+      <point x="0.0" y="-192.5" />
+    </edge>
+    <edge source="communications.Main" target="communications.ProducerConsumer" relationship="TO_MANY">
+      <point x="190.5" y="-15.0" />
+      <point x="-113.49999999999999" y="-261.811858608894" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="true" x="-93.49999999999989" y="469.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
