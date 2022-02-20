@@ -47,7 +47,7 @@ public class Buffer {
     // CORE METHODS
     //-------------------------------------------------------------------------------------------------
 
-    //TODO: JUSTIFY THE NOTIFY -> Basically at any given time i think its imposible for both a putmessage and pop message to send the threads to the monitor this ensures that there is never a chance of a deadlock (both waitning to be woken up, if they are passive). Another thing is that as producer ocnsumer is a thread and a buffer concets two trheads at a time only this implies that notify is enough , because at any given time there can only be one thread in the monitors waiting list so it will wake up exactly the thread that we want.
+    //TODO: JUSTIFY THE NOTIFY -> Basically at any given time i think its impossible for both a put message and pop message to send the threads to the monitor this ensures that there is never a chance of a deadlock (both waitning to be woken up, if they are passive). Another thing is that as producer ocnsumer is a thread and a buffer concets two trheads at a time only this implies that notify is enough , because at any given time there can only be one thread in the monitors waiting list so it will wake up exactly the thread that we want.
     //TODO: LAST CHECKS ON SYNCHRONIZED
 
     //The communication type of the incoming producerConsumer is active -> yield()
@@ -102,7 +102,6 @@ public class Buffer {
      * @return String containing the message that was removed from the buffer
      * @throws InterruptedException exception
      */
-    //TODO: Whom ever calls pop message needs to do it in a synchronized block on the monitor object of buffer
     public synchronized String popMessageActive()throws InterruptedException{
         while(getCurrentCapacity() == 0){
             Thread.yield();
