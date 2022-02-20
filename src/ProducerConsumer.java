@@ -26,9 +26,14 @@ public class ProducerConsumer extends Thread
 	private int id;
 
 	/**
-	 * Boolean that represents what form of communication is the thread supposed to use. If true its active communication, else its passive.
+	 * Boolean that represents what form of communication is used to receive the message from the messenger buffer. If true its active, else its passive
 	 */
-	private boolean activeCommunication;
+	private boolean senderIsActiveCommunication;
+
+	/**
+	 * Boolean that represents what form of communication is used to send the message to the receiver buffer. If true its active ,else its passive
+	 */
+	private boolean receiverIsActiveCommunication;
 
 	/**
 	 * The time in milliseconds that the thread is sent to sleep when processing the transport of the message between buffers
@@ -49,16 +54,18 @@ public class ProducerConsumer extends Thread
 	 * @param bfReceiver the receiver buffer, where the producerConsumer will send the message once its processed
 	 * @param message the message that is going to be transmitted by the thread from one buffer to the other
 	 * @param sleepTime the time that the thread will be sent to sleep while it "processes" the message transmission from buffer to buffer
-	 * @param activeCommunication it specifies if the current thread type of communication. If true its active communication, if false its passive communication.
+	 * @param senderIsActiveCommunication it specifies if the current thread the communication type when receiving a message from the sender buffer. If true its active, else its passive.
+	 * @param receiverIsActiveCommunication it specifies the current thread the communication type when sending a message to the receiver buffer. If ture its active, else its passive.
 	 */
-	public ProducerConsumer( int id,Buffer bfMessenger,Buffer bfReceiver,String message, int sleepTime,boolean activeCommunication)
+	public ProducerConsumer( int id,Buffer bfMessenger,Buffer bfReceiver,String message, int sleepTime,boolean senderIsActiveCommunication,boolean receiverIsActiveCommunication)
 	{
 		this.message=message;
 		this.bfReceiver=bfReceiver;
 		this.bfMessenger=bfMessenger;
 		this.id=id;
 		this.sleepTime = sleepTime;
-		this.activeCommunication = activeCommunication;
+		this.senderIsActiveCommunication = senderIsActiveCommunication;
+		this.receiverIsActiveCommunication = receiverIsActiveCommunication;
 	}
 
 	//-------------------------------------------------------------------------------------------------
@@ -97,14 +104,6 @@ public class ProducerConsumer extends Thread
 		this.id = id;
 	}
 
-	public boolean isActiveCommunication() {
-		return activeCommunication;
-	}
-
-	public void setActiveCommunication(boolean activeCommunication) {
-		this.activeCommunication = activeCommunication;
-	}
-
 	public int getSleepTime() {
 		return sleepTime;
 	}
@@ -113,8 +112,22 @@ public class ProducerConsumer extends Thread
 		this.sleepTime = sleepTime;
 	}
 
+	public boolean isSenderIsActiveCommunication() {
+		return senderIsActiveCommunication;
+	}
 
-	//-------------------------------------------------------------------------------------------------
+	public void setSenderIsActiveCommunication(boolean senderIsActiveCommunication) {
+		this.senderIsActiveCommunication = senderIsActiveCommunication;
+	}
+
+	public boolean isReceiverIsActiveCommunication() {
+		return receiverIsActiveCommunication;
+	}
+
+	public void setReceiverIsActiveCommunication(boolean receiverIsActiveCommunication) {
+		this.receiverIsActiveCommunication = receiverIsActiveCommunication;
+	}
+//-------------------------------------------------------------------------------------------------
 	// METHODS
 	//-------------------------------------------------------------------------------------------------
 
