@@ -1,0 +1,8 @@
+A 5
+B 4
+C 2
+D 4
+1 20 true false
+2 40 true true
+3 60 false true
+4 80 false false
