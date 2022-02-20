@@ -1,3 +1,5 @@
+package oldVersion;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,6 +45,7 @@ public class Main {
             }
         }
 
+        return null;
     }
 
     /**
@@ -52,6 +55,7 @@ public class Main {
     public static ArrayList<String> consoleInput(){
         //INPUT FORMAT
         //<id Buzón A> <tamaño buzón A>
+
         //…
         //<id Buzón D> <tamaño buzón D>
         //<id Proceso 1> <tiempo espera de transformación> <tipo de envío> <tipo de recepción>
@@ -87,10 +91,10 @@ public class Main {
         /**
          * BUFFER CREATION
          */
-        //Buffer bufferA = new Buffer();
-        //Buffer bufferB = new Buffer();
-        //Buffer bufferC = new Buffer();
-        //Buffer bufferD = new Buffer();
+        //oldVersion.Buffer bufferA = new oldVersion.Buffer();
+        //oldVersion.Buffer bufferB = new oldVersion.Buffer();
+        //oldVersion.Buffer bufferC = new oldVersion.Buffer();
+        //oldVersion.Buffer bufferD = new oldVersion.Buffer();
 
         /**
          * PRODUCER/CONSUMER CREATION

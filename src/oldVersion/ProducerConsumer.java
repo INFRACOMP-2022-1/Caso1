@@ -1,3 +1,5 @@
+package oldVersion;
+
 /**
  * Class that represents the entity of a producer consumer thread, which is in charge of transporting a message from
  * a messenger buffer to a receiver buffer whilst doing a modification and obeying the type of transmission specified
@@ -57,7 +59,7 @@ public class ProducerConsumer extends Thread
 	 * @param senderIsActiveCommunication it specifies if the current thread the communication type when receiving a message from the sender buffer. If true its active, else its passive.
 	 * @param receiverIsActiveCommunication it specifies the current thread the communication type when sending a message to the receiver buffer. If ture its active, else its passive.
 	 */
-	public ProducerConsumer( int id,Buffer bfMessenger,Buffer bfReceiver,String message, int sleepTime,boolean senderIsActiveCommunication,boolean receiverIsActiveCommunication)
+	public ProducerConsumer(int id, Buffer bfMessenger, Buffer bfReceiver, String message, int sleepTime, boolean senderIsActiveCommunication, boolean receiverIsActiveCommunication)
 	{
 		this.message=message;
 		this.bfReceiver=bfReceiver;
