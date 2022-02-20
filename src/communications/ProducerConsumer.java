@@ -135,7 +135,7 @@ public class ProducerConsumer {
         //TODO: Ask about the specific nomenclature for the message
         String processId = Long.toString(getPcId());
         String receptionType = (activeReception)?"A":"P";//A is for active reception, P is for passive reception
-        String emissionType = (activeEmission)?"A":"P";//A is for active emission, P is for passive reception
+        String emissionType = (activeEmission)?"A":"P";//A is for active emission, P is for passive emission
 
         String newMessage = currentMessage + " " + String.format("%s%s%s", processId, receptionType, emissionType);
         return newMessage;
