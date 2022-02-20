@@ -135,7 +135,7 @@ public class ProducerConsumer extends Thread
 	 * Processes a message recieved from the messenger buffer, once on is available to be colected,
 	 * then the thread will sleep for the specified time and then it will proceed to send the message to the next buffer if possible
 	 */
-	public synchronized void process_message() throws InterruptedException {
+	public  void process_message() throws InterruptedException {
 		//Retrieves the message from the messenger buffer
 		String messageC=bfMessenger.retrieveMessages();
 
