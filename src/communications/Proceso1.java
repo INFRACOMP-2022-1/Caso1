@@ -1,6 +1,10 @@
 package communications;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Proceso1  extends Thread
 {
@@ -154,6 +158,7 @@ public class Proceso1  extends Thread
             printResults();
 
             //Store results in outputFiles
+            writeResultsToFile();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -164,6 +169,46 @@ public class Proceso1  extends Thread
     //-------------------------------------------------------------------------------------------------
     // GETTERS,SETTERS AND SUPPORT METHODS
     //-------------------------------------------------------------------------------------------------
+
+    public void writeResultsToFile(){
+        Date currDate = new Date();
+        String fileName = String.format("results-%d",currDate.getTime());//gets date time in miliseconds
+        createNewResultsFile(fileName);
+    }
+
+    public void createNewResultsFile(String fileName){
+        try {
+            String fileRoute = String.format("Caso1/outputFiles/%s.txt", fileName);
+            File resultFile = new File(fileRoute);
+            if (resultFile.createNewFile()) {
+                System.out.println("You can see the results in the following file in the outputfiles folder: " + resultFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToNewResultsFile(String fileName){
+        try {
+            //GET FILE
+            String fileRoute = String.format("Caso1/outputFiles/%s.txt", fileName);
+            FileWriter fileWriter = new FileWriter(fileRoute);
+
+            //WRITE
+            for(int i = 0 ; i < wordListReceived.size();i++){
+                fileWriter.write(String.format( "Message %d : %s", i ,wordListReceived.get(i)));
+            }
+
+            //CLOSE FILE
+            fileWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void printResults(){
         System.out.println("");
