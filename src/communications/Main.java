@@ -122,6 +122,8 @@ public class Main {
      * Scans the console input for the number of messages
      */
     public static void scanConsoleInputNumberMessages(){
+
+        //datos = input("Dame el numero de mensajes")
        Scanner sc = new Scanner(System.in);
        System.out.println("Enter the number of messages to be sent by process 1: ");
        numberOfMessages = sc.nextInt();

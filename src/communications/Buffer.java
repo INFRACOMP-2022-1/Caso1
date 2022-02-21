@@ -61,7 +61,7 @@ public class Buffer {
      * @param message String containing the message to send
      * @throws InterruptedException exception
      */
-    public synchronized void putMessageActive(String message) throws InterruptedException{
+    public void putMessageActive(String message) throws InterruptedException{
         while(getCurrentCapacity() == getMaxCapacity()){
             Thread.yield();
         }
@@ -102,7 +102,8 @@ public class Buffer {
      * @return String containing the message that was removed from the buffer
      * @throws InterruptedException exception
      */
-    public synchronized String popMessageActive()throws InterruptedException{
+    //TODO: Yield active methods cant be syncronized, only get current capacity can be
+    public String popMessageActive()throws InterruptedException{
         while(getCurrentCapacity() == 0){
             Thread.yield();
         }
