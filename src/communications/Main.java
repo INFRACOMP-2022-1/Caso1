@@ -25,6 +25,12 @@ public class Main {
     public static HashMap<String,ProducerConsumer> producerConsumersList;
 
     public static int numberOfMessages;
+    
+    public static int buffers_max_capacity;
+    
+    public static ArrayList<String> lista_pala;
+    
+    public static Proceso1 proceso1;
 
 
     //-------------------------------------------------------------------------------------------------
@@ -45,8 +51,48 @@ public class Main {
         System.out.println("The input configuration has been completed/n");
 
         //Reads the number of messages that are going to be sent by process 1
+        
         scanConsoleInputNumberMessages();
+        
+        while(numberOfMessages>buffers_max_capacity)
+        {
+        	 System.out.println("the number of messages you want to send is greater than the total buffer storage");
+        	 
+        	 scanConsoleInputNumberMessages();
 
+        	
+        }
+        
+        
+        for(int i = 0; i< numberOfMessages;i++) 
+	       {
+	    	   
+	    	   Scanner sci = new Scanner(System.in);
+	    	   String num_palabra= Integer.toString(i);
+		       System.out.println("ingrese la palabra "+num_palabra+" :");
+		       String h = sci.nextLine();
+		       
+		       lista_pala.add(h);
+		       
+	       }
+        
+        	lista_pala.add("FIN");
+
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         //TODO: START CYCLIC BARRIER HERE
 
         //TODO: START THE THREADS
@@ -84,6 +130,7 @@ public class Main {
         for(int i = 0; i< 4;i++){
             Buffer newBuffer = createBuffer(rawInput.get(i));
             bufferList.put(newBuffer.getBufferId(),newBuffer);
+            buffers_max_capacity=newBuffer.getMaxCapacity();
             System.out.println(newBuffer.toString());
         }
 
@@ -93,7 +140,8 @@ public class Main {
             Buffer originBuffer;
             Buffer destinationBuffer;
 
-            if(i==4){
+            if(i==4)
+            {
                 originBuffer = bufferList.get(Character.toString('D'));
                 destinationBuffer = bufferList.get(Character.toString('A'));
             }
@@ -112,6 +160,7 @@ public class Main {
             boolean activeEmission = Boolean.parseBoolean(splitProducerConsumer[3]);
 
             //TODO: Decide what im going to do about the messages
+            
             ProducerConsumer newProducerConsumer = new ProducerConsumer(originBuffer,destinationBuffer,"",pcId,activeReception,activeEmission, sleepTimeMilli );
             producerConsumersList.put(Long.toString(newProducerConsumer.getPcId()),newProducerConsumer);
             System.out.println(newProducerConsumer.toString());
@@ -120,15 +169,20 @@ public class Main {
 
     /**
      * Scans the console input for the number of messages
+     * @return 
      */
-    public static void scanConsoleInputNumberMessages(){
-
-        //datos = input("Dame el numero de mensajes")
+    public static  void scanConsoleInputNumberMessages()
+    {
        Scanner sc = new Scanner(System.in);
        System.out.println("Enter the number of messages to be sent by process 1: ");
        numberOfMessages = sc.nextInt();
+       
     }
 
+    
+    
+    
+    
     /**
      * This takes a string with a buffer configuration and then creates a buffer reflecting those parameters
      * @param specifications a string containing all the information to create a buffer

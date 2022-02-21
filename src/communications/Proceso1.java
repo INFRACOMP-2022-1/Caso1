@@ -2,7 +2,8 @@ package communications;
 
 import java.util.ArrayList;
 
-public class ProducerConsumer  extends Thread {
+public class Proceso1  extends Thread
+{
     //-------------------------------------------------------------------------------------------------
     // ATTRIBUTES
     //-------------------------------------------------------------------------------------------------
@@ -59,7 +60,7 @@ public class ProducerConsumer  extends Thread {
      * @param activeEmission if the communication type for emission of messages from the origin buffer is active, if it's not its passive
      * @param sleepTime the time in milliseconds that the thread is sent to sleep when it's "processing" the message before sending it
      */
-    public ProducerConsumer(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime)
+    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> lista_palabras)
     {
         this.originBuffer = originBuffer;
         this.destinationBuffer = destinationBuffer;
@@ -68,6 +69,7 @@ public class ProducerConsumer  extends Thread {
         this.activeReception = activeReception;
         this.activeEmission = activeEmission;
         this.sleepTime = sleepTime;
+        this.lista_palabras=lista_palabras;
     }
 
     //-------------------------------------------------------------------------------------------------
@@ -80,9 +82,42 @@ public class ProducerConsumer  extends Thread {
      * The synchronization is handled exclusively by the buffer itself
      * @throws InterruptedException exception
      */
-    public void receiveMessage() throws InterruptedException {
+    
+    
+  
+    public void send_message() throws InterruptedException 
+    {
+  
+    	for(int i = 0; i< lista_palabras.size();i++) 
+    	{
+    		String palabra=lista_palabras.get(i);
+    		
+    		emmitMessage(palabra);
+  		
+    	}    	
+    }
+    
+   
+    
+    public void receiveMessage() throws InterruptedException 
+    {
         currentMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * The message is modified to add a registry that it has passed by this particular process
@@ -92,16 +127,32 @@ public class ProducerConsumer  extends Thread {
      */
     
     
-    public void processMessage() throws InterruptedException
+    
+    
+    
+    
+    
+    
+    public void processMessage() throws InterruptedException 
     {
-    	while(!currentMessage.equalsIgnoreCase("FIN")) 
+    
+        	
+        while(!currentMessage.equalsIgnoreCase("FIN")) 
         {
 
                 Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
                 
         }
+        
+        
+      // falta matar el thread 
+        
+        
+                
+                
     }
+
 
 
     /**
@@ -109,11 +160,12 @@ public class ProducerConsumer  extends Thread {
      * The synchronization is handled by the buffers.
      * @throws InterruptedException
      */
-    public void emmitMessage() throws InterruptedException {
+    public void emmitMessage(String pala) throws InterruptedException
+    {
         if(activeEmission)
-            destinationBuffer.putMessageActive(currentMessage);
+            destinationBuffer.putMessageActive(pala);
         else
-            destinationBuffer.putMessagePassive(currentMessage);
+            destinationBuffer.putMessagePassive(pala);
     }
     
     
@@ -129,9 +181,10 @@ public class ProducerConsumer  extends Thread {
     public void run(){
         try {
             //TODO: Check if I should add an aspect of synchronization to this
+        	send_message();
             receiveMessage();
             processMessage();
-            emmitMessage();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -209,3 +262,5 @@ public class ProducerConsumer  extends Thread {
         this.sleepTime = sleepTime;
     }
 }
+
+
