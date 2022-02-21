@@ -95,7 +95,7 @@ public class Main {
 
             if(i==4){
                 originBuffer = bufferList.get(Character.toString('D'));
-                destinationBuffer = bufferList.get(Character.toString('A');
+                destinationBuffer = bufferList.get(Character.toString('A'));
             }
             else{
                 int j = i - 5;
