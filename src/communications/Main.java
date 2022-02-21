@@ -51,6 +51,10 @@ public class Main {
 
         //TODO: START THE THREADS
 
+            //Start todos los threads
+
+            //artificialmente
+
             //TODO: START PROCESS-CONSUMER 1 AND SEND THE INITIAL NUMBER OF MESSAGES
 
 
@@ -85,9 +89,20 @@ public class Main {
 
         //Create the processes
         for(int i = 4; i<rawInput.size();i++){
-            int j = i - 4;
-            Buffer originBuffer = bufferList.get(Character.toString((char)('A'+ j)));
-            Buffer destinationBuffer = bufferList.get(Character.toString((char)('B'+ j)));
+
+            Buffer originBuffer;
+            Buffer destinationBuffer;
+
+            if(i==4){
+                originBuffer = bufferList.get(Character.toString('D'));
+                destinationBuffer = bufferList.get(Character.toString('A');
+            }
+            else{
+                int j = i - 5;
+                originBuffer = bufferList.get(Character.toString((char)('A'+ j)));
+                destinationBuffer = bufferList.get(Character.toString((char)('B'+ j)));
+            }
+
 
             String currentProducerConsumerRaw = rawInput.get(i);
             String[] splitProducerConsumer = currentProducerConsumerRaw.split(" ");

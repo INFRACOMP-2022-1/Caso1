@@ -1,6 +1,6 @@
 package communications;
 
-public class ProducerConsumer {
+public class ProducerConsumer extends Thread {
     //-------------------------------------------------------------------------------------------------
     // ATTRIBUTES
     //-------------------------------------------------------------------------------------------------
@@ -84,14 +84,16 @@ public class ProducerConsumer {
      * by sending the thread to sleep by a determined time length.
      */
     public void processMessage(){
+
         try {
             //TODO: ALL MESSAGES CAN HAVE A CONTENT?
+            Thread.sleep(getSleepTime());
+
             if(!currentMessage.equalsIgnoreCase("FIN")){
-                Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
             }
             else{
-                //TODO: IS THERE A PARTICULAR SITUATION IF THE THREAD IS FIN? DO I STILL REGISTER THE TRANSITO
+                //TODO: WHAT DO I DO? IS THERE A PARTICULAR SITUATION IF THE THREAD IS FIN? DO I STILL REGISTER THE TRANSITO
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -124,6 +126,7 @@ public class ProducerConsumer {
             e.printStackTrace();
         }
     }
+
 
 
     //-------------------------------------------------------------------------------------------------
