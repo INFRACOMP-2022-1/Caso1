@@ -94,10 +94,8 @@ public class ProducerConsumer  extends Thread {
     {
     	while(!currentMessage.equalsIgnoreCase("FIN")) 
         {
-
                 Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
-                
         }
     }
 
@@ -126,10 +124,14 @@ public class ProducerConsumer  extends Thread {
      */
     public void run(){
         try {
-            //TODO: ESTO ESTA MAL EL WHILE DE PROCESS MESSAGE DEBE IR EN EL RUN NO DENTRO DEL PROCESS, NO SALE DE AHI HASTA QUE LLEGUE EL FIN Y ESO NUNCA PUEDE PASAR SI NO PUEDE DEPOSITAR EL MENSAJE EN EL SIGUIENTE BUFFER
-            receiveMessage();
-            processMessage();
-            emmitMessage();
+            //Untill weve updated current message to fin were going to keep receiving messages,
+            //Once fin message is received the while is executed one last time and its then exited and the whole execution stops,
+            while(!currentMessage.equals("FIN")){
+                receiveMessage();
+                processMessage();
+                emmitMessage();
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
