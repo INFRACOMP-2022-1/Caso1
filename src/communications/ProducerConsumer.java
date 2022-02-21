@@ -1,6 +1,8 @@
 package communications;
 
-public class ProducerConsumer extends Thread {
+import java.util.ArrayList;
+
+public class ProducerConsumer  extends Thread {
     //-------------------------------------------------------------------------------------------------
     // ATTRIBUTES
     //-------------------------------------------------------------------------------------------------
@@ -39,6 +41,9 @@ public class ProducerConsumer extends Thread {
     The time that the thread is sent to sleep when its "processing" a message before sending it to the next buffer
      */
     private int sleepTime;
+    
+    private  ArrayList<String> lista_palabras;
+
 
     //-------------------------------------------------------------------------------------------------
     // CONSTRUCTOR
@@ -54,7 +59,8 @@ public class ProducerConsumer extends Thread {
      * @param activeEmission if the communication type for emission of messages from the origin buffer is active, if it's not its passive
      * @param sleepTime the time in milliseconds that the thread is sent to sleep when it's "processing" the message before sending it
      */
-    public ProducerConsumer(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime){
+    public ProducerConsumer(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime)
+    {
         this.originBuffer = originBuffer;
         this.destinationBuffer = destinationBuffer;
         this.currentMessage = currentMessage;
@@ -82,21 +88,18 @@ public class ProducerConsumer extends Thread {
      * The message is modified to add a registry that it has passed by this particular process
      * with a particular set of protocols.Additionally, the thread simulates a processing time
      * by sending the thread to sleep by a determined time length.
+     * @throws InterruptedException 
      */
-    public void processMessage(){
+    
+    
+    public void processMessage() throws InterruptedException
+    {
+    	while(!currentMessage.equalsIgnoreCase("FIN")) 
+        {
 
-        try {
-            //TODO: ALL MESSAGES CAN HAVE A CONTENT?
-            Thread.sleep(getSleepTime());
-
-            if(!currentMessage.equalsIgnoreCase("FIN")){
+                Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
-            }
-            else{
-                //TODO: WHAT DO I DO? IS THERE A PARTICULAR SITUATION IF THE THREAD IS FIN? DO I STILL REGISTER THE TRANSITO
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+                
         }
     }
 
@@ -112,6 +115,13 @@ public class ProducerConsumer extends Thread {
         else
             destinationBuffer.putMessagePassive(currentMessage);
     }
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * The run method that the thread will execute
@@ -126,7 +136,6 @@ public class ProducerConsumer extends Thread {
             e.printStackTrace();
         }
     }
-
 
 
     //-------------------------------------------------------------------------------------------------
