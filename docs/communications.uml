@@ -3,39 +3,104 @@
   <ID>JAVA</ID>
   <OriginalElement>communications</OriginalElement>
   <nodes>
-    <node x="44.23718801469643" y="177.8152793614596">communications.ProducerConsumer</node>
-    <node x="-387.0575826681869" y="434.0193842645383">communications.Buffer</node>
-    <node x="-458.5575826681869" y="118.0034207525656">communications.Main</node>
+    <node x="256.5" y="470.0">communications.ProducerConsumer</node>
+    <node x="-964.6200997861727" y="580.0">communications.Buffer</node>
+    <node x="54.818840579710184" y="1160.0">communications.Main</node>
+    <node x="10.5" y="448.0">communications.Proceso1</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="communications.Main" target="communications.Proceso1" relationship="CREATE">
+      <point x="94.74999999999997" y="-171.0" />
+      <point x="339.0688405797101" y="1139.0" />
+      <point x="373.8115942028986" y="1139.0" />
+      <point x="373.8115942028986" y="1119.0" />
+      <point x="180.0" y="1119.0" />
+      <point x="56.5" y="325.0" />
+    </edge>
     <edge source="communications.Main" target="communications.Buffer" relationship="CREATE">
-      <point x="-15.0" y="115.5" />
-      <point x="-15.0" y="-192.5" />
+      <point x="94.74999999999997" y="-171.0" />
+      <point x="339.0688405797101" y="1139.0" />
+      <point x="373.8115942028986" y="1139.0" />
+      <point x="373.8115942028986" y="1119.0" />
+      <point x="493.0" y="1119.0" />
+      <point x="493.0" y="407.0" />
+      <point x="-767.9534331195059" y="407.0" />
+      <point x="78.66666666666669" y="193.0" />
+    </edge>
+    <edge source="communications.Proceso1" target="communications.Buffer" relationship="TO_ONE">
+      <point x="-56.5" y="-325.0" />
+      <point x="67.0" y="427.0" />
+      <point x="119.9927536231884" y="427.0" />
+      <point x="119.9927536231884" y="417.0" />
+      <point x="-925.2867664528394" y="417.0" />
+      <point x="-78.66666666666669" y="193.0" />
     </edge>
     <edge source="communications.Main" target="communications.ProducerConsumer" relationship="CREATE">
-      <point x="190.5" y="0.0" />
-      <point x="-113.49999999999999" y="-246.811858608894" />
+      <point x="94.74999999999997" y="-171.0" />
+      <point x="339.0688405797101" y="1139.0" />
+      <point x="373.8115942028986" y="1139.0" />
+      <point x="373.8115942028986" y="1119.0" />
+      <point x="426.0" y="1119.0" />
+      <point x="56.5" y="303.0" />
+    </edge>
+    <edge source="communications.Proceso1" target="communications.Buffer" relationship="DEPENDENCY">
+      <point x="56.5" y="-325.0" />
+      <point x="180.0" y="417.0" />
+      <point x="250.81159420289856" y="417.0" />
+      <point x="250.81159420289856" y="407.0" />
+      <point x="-846.6200997861727" y="407.0" />
+      <point x="0.0" y="193.0" />
     </edge>
     <edge source="communications.ProducerConsumer" target="communications.Buffer" relationship="DEPENDENCY">
-      <point x="-113.49999999999999" y="0.0" />
-      <point x="119.0" y="-146.2041049030787" />
+      <point x="56.5" y="-303.0" />
+      <point x="426.0" y="417.0" />
+      <point x="250.81159420289856" y="417.0" />
+      <point x="250.81159420289856" y="407.0" />
+      <point x="-846.6200997861727" y="407.0" />
+      <point x="0.0" y="193.0" />
     </edge>
     <edge source="communications.ProducerConsumer" target="communications.Buffer" relationship="TO_ONE">
-      <point x="-113.49999999999999" y="146.2041049030787" />
-      <point x="119.0" y="0.0" />
+      <point x="-56.5" y="-303.0" />
+      <point x="313.0" y="427.0" />
+      <point x="119.99275362318838" y="427.0" />
+      <point x="119.99275362318838" y="417.0" />
+      <point x="-925.2867664528394" y="417.0" />
+      <point x="-78.66666666666669" y="193.0" />
     </edge>
     <edge source="communications.Main" target="communications.Buffer" relationship="TO_MANY">
-      <point x="0.0" y="115.5" />
-      <point x="0.0" y="-192.5" />
+      <point x="-94.75000000000003" y="-171.0" />
+      <point x="149.56884057971016" y="1139.0" />
+      <point x="116.31884057971016" y="1139.0" />
+      <point x="116.31884057971016" y="1129.0" />
+      <point x="0.0" y="1129.0" />
+      <point x="0.0" y="427.0" />
+      <point x="119.9927536231884" y="427.0" />
+      <point x="119.9927536231884" y="417.0" />
+      <point x="-925.2867664528394" y="417.0" />
+      <point x="-78.66666666666669" y="193.0" />
     </edge>
     <edge source="communications.Main" target="communications.ProducerConsumer" relationship="TO_MANY">
-      <point x="190.5" y="-15.0" />
-      <point x="-113.49999999999999" y="-261.811858608894" />
+      <point x="-94.75000000000003" y="-171.0" />
+      <point x="149.56884057971016" y="1139.0" />
+      <point x="116.31884057971016" y="1139.0" />
+      <point x="116.31884057971016" y="1129.0" />
+      <point x="313.0" y="1129.0" />
+      <point x="-56.5" y="303.0" />
+    </edge>
+    <edge source="communications.Main" target="communications.Proceso1" relationship="TO_ONE">
+      <point x="-94.75000000000003" y="-171.0" />
+      <point x="149.56884057971016" y="1139.0" />
+      <point x="116.31884057971016" y="1139.0" />
+      <point x="116.31884057971016" y="1129.0" />
+      <point x="67.0" y="1129.0" />
+      <point x="-56.5" y="325.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="1.0" showDependencies="true" x="-93.49999999999989" y="469.0" />
-  <SelectedNodes />
+  <settings layout="Hierarchic" zoom="0.32063074901445465" showDependencies="true" x="246.5" y="751.0" />
+  <SelectedNodes>
+    <node>communications.Buffer</node>
+  </SelectedNodes>
   <Categories>
     <Category>Fields</Category>
     <Category>Methods</Category>

@@ -19,11 +19,6 @@ public class Proceso1  extends Thread
     private Buffer destinationBuffer;
 
     /*
-    The current message being held by the producer consumer
-     */
-    private String currentMessage;
-
-    /*
     The id of the producer consumer
      */
     private long pcId;
@@ -42,8 +37,21 @@ public class Proceso1  extends Thread
     The time that the thread is sent to sleep when its "processing" a message before sending it to the next buffer
      */
     private int sleepTime;
-    
-    private  ArrayList<String> lista_palabras;
+
+    /*
+    The list of words that are going to be initially sent by Process1
+     */
+    private  ArrayList<String> wordListSend;
+
+    /*
+    The list of words that process 1 has recieved
+     */
+    private ArrayList<String> wordListReceived;
+
+    /*
+    The current message that is being processed
+     */
+    private String currentMessage;
 
 
     //-------------------------------------------------------------------------------------------------
@@ -54,22 +62,22 @@ public class Proceso1  extends Thread
      * Creates a producer consumer instance
      * @param originBuffer the buffer from which the PC will be receiving the message
      * @param destinationBuffer the buffer to which the PC will be sending the message
-     * @param currentMessage the message that the PC is currently processing
      * @param pcId the id of the PC
      * @param activeReception if the communication type for reception of messages from the origin buffer is active, if it's not its passive
      * @param activeEmission if the communication type for emission of messages from the origin buffer is active, if it's not its passive
      * @param sleepTime the time in milliseconds that the thread is sent to sleep when it's "processing" the message before sending it
      */
-    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> lista_palabras)
+    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, long pcId,String currentMessage, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> wordListSend)
     {
         this.originBuffer = originBuffer;
         this.destinationBuffer = destinationBuffer;
-        this.currentMessage = currentMessage;
         this.pcId = pcId;
         this.activeReception = activeReception;
         this.activeEmission = activeEmission;
         this.sleepTime = sleepTime;
-        this.lista_palabras=lista_palabras;
+        this.wordListSend = wordListSend;
+        this.currentMessage = currentMessage;
+        this.wordListReceived = new ArrayList<>();//Starts out empty
     }
 
     //-------------------------------------------------------------------------------------------------
@@ -82,42 +90,25 @@ public class Proceso1  extends Thread
      * The synchronization is handled exclusively by the buffer itself
      * @throws InterruptedException exception
      */
-    
-    
-  
-    public void send_message() throws InterruptedException 
+    public void sendMessage() throws InterruptedException
     {
-  
-    	for(int i = 0; i< lista_palabras.size();i++) 
+    	for(int i = 0; i< wordListSend.size(); i++)
     	{
-    		String palabra=lista_palabras.get(i);
-    		
+    		String palabra= wordListSend.get(i);
     		emmitMessage(palabra);
-  		
-    	}    	
+    	}
+        emmitMessage("FIN");
     }
-    
-   
-    
-    public void receiveMessage() throws InterruptedException 
-    {
-        currentMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
+
+    /**
+     * Waits and receives a message incoming from the origin buffer, in this case buffer D.
+     * Adds the received message to the wordListReceived.
+     * @throws InterruptedException
+     */
+    public void receiveMessage() throws InterruptedException {
+        String receivedMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
+        wordListReceived.add(receivedMessage);
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * The message is modified to add a registry that it has passed by this particular process
@@ -125,65 +116,42 @@ public class Proceso1  extends Thread
      * by sending the thread to sleep by a determined time length.
      * @throws InterruptedException 
      */
-    
-    
-    
-    
-    
-    
-    
-    
-    public void processMessage() throws InterruptedException 
-    {
-    
-        	
-        while(!currentMessage.equalsIgnoreCase("FIN")) 
-        {
-
-                Thread.sleep(getSleepTime());
-                currentMessage = formatMessage();//modifies the currentMessage string
-                
+    public void processMessage() throws InterruptedException {
+        if(!currentMessage.equals("FIN")){
+            Thread.sleep(getSleepTime());
+            currentMessage = formatMessage();
         }
-        
-        
-      // falta matar el thread 
-        
-        
-                
-                
     }
-
-
 
     /**
      * The message is emitted to the destination buffer after its been modified and the needed time has passed.
      * The synchronization is handled by the buffers.
      * @throws InterruptedException
      */
-    public void emmitMessage(String pala) throws InterruptedException
-    {
+    public void emmitMessage(String message) throws InterruptedException {
         if(activeEmission)
-            destinationBuffer.putMessageActive(pala);
+            destinationBuffer.putMessageActive(message);
         else
-            destinationBuffer.putMessagePassive(pala);
+            destinationBuffer.putMessagePassive(message);
     }
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * The run method that the thread will execute
      */
+    @Override
     public void run(){
         try {
-            //TODO: Check if I should add an aspect of synchronization to this
-        	send_message();
-            receiveMessage();
-            processMessage();
+            //This sends all the messages including FIN
+        	sendMessage();
+
+            //The process is set to receive all the messages it sent including the FIN
+            for(int i = 0; i < wordListSend.size() + 1; i++){
+                receiveMessage();//gets the message out of the buffer and adds to the received list
+                processMessage();//does the respective wait times specified for sleep, it doesnt sleep when wait is done
+            }
+
+            //Responsible for printing the results of re received messages
+            printResults();
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -195,9 +163,20 @@ public class Proceso1  extends Thread
     // GETTERS,SETTERS AND SUPPORT METHODS
     //-------------------------------------------------------------------------------------------------
 
-    public String formatMessage(){
+    public void printResults(){
+        System.out.println("EXECUTION RESULTS");
+        System.out.println("");
+        System.out.println("These are the messages received , in order:");
+        for (int i = 0 ; i < wordListReceived.size();i++){
+            String formattedOutput = String.format("Message %d conent: %s",i,wordListReceived.get(i));
+            System.out.println(formattedOutput);
+        }
 
-        //TODO: Ask about the specific nomenclature for the message
+        System.out.println("");
+        System.out.println("Goodbye.");
+    }
+
+    public String formatMessage(){
         String processId = Long.toString(getPcId());
         String receptionType = (activeReception)?"A":"P";//A is for active reception, P is for passive reception
         String emissionType = (activeEmission)?"A":"P";//A is for active emission, P is for passive emission
@@ -222,13 +201,6 @@ public class Proceso1  extends Thread
         this.destinationBuffer = destinationBuffer;
     }
 
-    public String getCurrentMessage() {
-        return currentMessage;
-    }
-
-    public void setCurrentMessage(String currentMessage) {
-        this.currentMessage = currentMessage;
-    }
 
     public long getPcId() {
         return pcId;

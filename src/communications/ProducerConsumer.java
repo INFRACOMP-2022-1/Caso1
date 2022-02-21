@@ -41,8 +41,6 @@ public class ProducerConsumer  extends Thread {
     The time that the thread is sent to sleep when its "processing" a message before sending it to the next buffer
      */
     private int sleepTime;
-    
-    private  ArrayList<String> lista_palabras;
 
 
     //-------------------------------------------------------------------------------------------------
@@ -128,7 +126,7 @@ public class ProducerConsumer  extends Thread {
      */
     public void run(){
         try {
-            //TODO: Check if I should add an aspect of synchronization to this
+            //TODO: ESTO ESTA MAL EL WHILE DE PROCESS MESSAGE DEBE IR EN EL RUN NO DENTRO DEL PROCESS, NO SALE DE AHI HASTA QUE LLEGUE EL FIN Y ESO NUNCA PUEDE PASAR SI NO PUEDE DEPOSITAR EL MENSAJE EN EL SIGUIENTE BUFFER
             receiveMessage();
             processMessage();
             emmitMessage();

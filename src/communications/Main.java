@@ -22,15 +22,17 @@ public class Main {
 
     public static HashMap<String,Buffer> bufferList;
 
+    public static Proceso1 process1;
+
     public static HashMap<String,ProducerConsumer> producerConsumersList;
 
     public static int numberOfMessages;
     
     public static int buffers_max_capacity;
     
-    public static ArrayList<String> lista_pala;
+    public static ArrayList<String> wordList;
     
-    public static Proceso1 proceso1;
+
 
 
     //-------------------------------------------------------------------------------------------------
@@ -53,47 +55,30 @@ public class Main {
         //Reads the number of messages that are going to be sent by process 1
         
         scanConsoleInputNumberMessages();
-        
+
+        //checks if the number of messages to be sent goes over total buffer capacity
+
         while(numberOfMessages>buffers_max_capacity)
         {
         	 System.out.println("the number of messages you want to send is greater than the total buffer storage");
         	 
         	 scanConsoleInputNumberMessages();
-
-        	
         }
         
-        
+        //receives the message strings that are going to be sent
+
         for(int i = 0; i< numberOfMessages;i++) 
 	       {
-	    	   
-	    	   Scanner sci = new Scanner(System.in);
-	    	   String num_palabra= Integer.toString(i);
-		       System.out.println("ingrese la palabra "+num_palabra+" :");
-		       String h = sci.nextLine();
-		       
-		       lista_pala.add(h);
-		       
+	    	   Scanner sc = new Scanner(System.in);
+		       System.out.println("Input word "+ Integer.toString(i) +" :");
+		       String word = sc.nextLine();
+               wordList.add(word);
 	       }
-        
-        	lista_pala.add("FIN");
+
+        //wordList.add("FIN");//This will be sent in process 1
 
         
         
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //TODO: START CYCLIC BARRIER HERE
 
         //TODO: START THE THREADS
 
@@ -126,6 +111,7 @@ public class Main {
         bufferList = new HashMap<>();
         producerConsumersList = new HashMap<>();
 
+
         //Create the buffers
         for(int i = 0; i< 4;i++){
             Buffer newBuffer = createBuffer(rawInput.get(i));
@@ -134,23 +120,36 @@ public class Main {
             System.out.println(newBuffer.toString());
         }
 
-        //Create the processes
-        for(int i = 4; i<rawInput.size();i++){
+        //Create process 1
+        createProcess1(rawInput.get(4));
 
+        //Create the processes 2-4
+        createProducerConsumer(rawInput);
+    }
+
+
+    public static void createProcess1(String prodConRaw){
+        Buffer originBufferP1 = bufferList.get(Character.toString('D'));
+        Buffer destinationBufferP1 = bufferList.get(Character.toString('A'));
+        String currentProducerConsumerRaw = prodConRaw;
+        String[] splitProducerConsumer = currentProducerConsumerRaw.split(" ");
+        long pcId = Long.parseLong(splitProducerConsumer[0]);
+        int sleepTimeMilli = Integer.parseInt(splitProducerConsumer[1]);
+        boolean activeReception = Boolean.parseBoolean(splitProducerConsumer[2]);
+        boolean activeEmission = Boolean.parseBoolean(splitProducerConsumer[3]);
+
+        //Creates new process 1 and intiializes the atribute
+        process1 = new Proceso1(originBufferP1,destinationBufferP1,pcId,"",activeReception,activeEmission,sleepTimeMilli,wordList);
+    }
+
+    public static void createProducerConsumer(ArrayList<String> rawInput){
+        for(int i = 5; i<rawInput.size();i++){
             Buffer originBuffer;
             Buffer destinationBuffer;
 
-            if(i==4)
-            {
-                originBuffer = bufferList.get(Character.toString('D'));
-                destinationBuffer = bufferList.get(Character.toString('A'));
-            }
-            else{
-                int j = i - 5;
-                originBuffer = bufferList.get(Character.toString((char)('A'+ j)));
-                destinationBuffer = bufferList.get(Character.toString((char)('B'+ j)));
-            }
-
+            int j = i - 5;
+            originBuffer = bufferList.get(Character.toString((char)('A'+ j)));
+            destinationBuffer = bufferList.get(Character.toString((char)('B'+ j)));
 
             String currentProducerConsumerRaw = rawInput.get(i);
             String[] splitProducerConsumer = currentProducerConsumerRaw.split(" ");
@@ -159,9 +158,8 @@ public class Main {
             boolean activeReception = Boolean.parseBoolean(splitProducerConsumer[2]);
             boolean activeEmission = Boolean.parseBoolean(splitProducerConsumer[3]);
 
-            //TODO: Decide what im going to do about the messages
-            
             ProducerConsumer newProducerConsumer = new ProducerConsumer(originBuffer,destinationBuffer,"",pcId,activeReception,activeEmission, sleepTimeMilli );
+            //This only contains producerConsumers 2-4
             producerConsumersList.put(Long.toString(newProducerConsumer.getPcId()),newProducerConsumer);
             System.out.println(newProducerConsumer.toString());
         }
