@@ -39,9 +39,6 @@ public class Main {
     // MAIN METHOD
     //-------------------------------------------------------------------------------------------------
 
-
-    //TODO : Declare parameters for all the qualities of the buffers and the processes
-    //TODO: These parameters will be initializes by the parseConsole method
     public static void main(String[] args){
         //RUN CONSOLE AND RETURN THE RESULTING INFORMATION
 
@@ -58,51 +55,49 @@ public class Main {
 
         //checks if the number of messages to be sent goes over total buffer capacity
 
-        while(numberOfMessages>buffers_max_capacity)
-        {
+        while(numberOfMessages>buffers_max_capacity) {
         	 System.out.println("the number of messages you want to send is greater than the total buffer storage");
-        	 
         	 scanConsoleInputNumberMessages();
         }
         
         //receives the message strings that are going to be sent
 
-        for(int i = 0; i< numberOfMessages;i++) 
-	       {
+        for(int i = 0; i< numberOfMessages;i++) {
 	    	   Scanner sc = new Scanner(System.in);
 		       System.out.println("Input word "+ Integer.toString(i) +" :");
 		       String word = sc.nextLine();
                wordList.add(word);
-	       }
+        }
+        //wordList.add("FIN");//This will be sent in process 1 sendMessage method
 
-        //wordList.add("FIN");//This will be sent in process 1
+        /*
+        This is where the fun begins
+         */
+        System.out.println("All threads are started....");
+        System.out.println("Waiting for all messages to arrive back at process 1....");
 
-        
-        
+        startAllThreads();
 
-        //TODO: START THE THREADS
-
-            //Start todos los threads
-
-            //artificialmente
-
-            //TODO: START PROCESS-CONSUMER 1 AND SEND THE INITIAL NUMBER OF MESSAGES
-
-
-            //TODO: START ALL THE OTHER THREADS
-
-            //TODO: ONCE ALL THREADS ARRIVE TO THE BEGGINING MAKE THEM PRINT THE MESSAGE (WITH THE TRACE) AND ADD IT TO AN OUTPUT FILE
-            //THIS CAN BE DONE BY SPECIFING THAT WHEN IN D BUFFER AND SOME ONE TRIES TO TAKE THEM OUT THEY SHOULD INSTEAD BE PRINTED, BUEN CONONDRUM
-
-        //TODO: JOIN THE THREADS HERE TO KILL THEM
-
-        //TODO: WRITE RESULTS SOMEWHERE?
+        System.out.println("");
+        System.out.println("Goodbye.");
+        //Once the messages have finished cycling through a message will be printed from Process 1 with all the messages and the trace produced
     }
 
     //-------------------------------------------------------------------------------------------------
     // AUXILIARY METHODS
     //-------------------------------------------------------------------------------------------------
 
+    /**
+     * All threads are started, 1 to 4.
+     * First the process 1 thread is started (this will send all the messages)
+     * Then the remaining threads 2 to 4 are started in sequence.
+     */
+    public static void startAllThreads(){
+        process1.start();//starts process 1 allowing it to send the messages to buffer A and then set it self to wait mode
+        for(ProducerConsumer normalProcess: producerConsumersList.values()){
+            normalProcess.start();
+        }
+    }
     /**
      * Parses the content of the inputFile.txt creates the corresponding buffers and producer consumers
      */

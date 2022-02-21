@@ -153,6 +153,8 @@ public class Proceso1  extends Thread
             //Responsible for printing the results of re received messages
             printResults();
 
+            //Store results in outputFiles
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -164,6 +166,7 @@ public class Proceso1  extends Thread
     //-------------------------------------------------------------------------------------------------
 
     public void printResults(){
+        System.out.println("");
         System.out.println("EXECUTION RESULTS");
         System.out.println("");
         System.out.println("These are the messages received , in order:");
@@ -172,8 +175,6 @@ public class Proceso1  extends Thread
             System.out.println(formattedOutput);
         }
 
-        System.out.println("");
-        System.out.println("Goodbye.");
     }
 
     public String formatMessage(){
