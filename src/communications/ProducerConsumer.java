@@ -90,15 +90,14 @@ public class ProducerConsumer  extends Thread {
      */
     
     
-    public void processMessage() throws InterruptedException
-    {
-    	while(!currentMessage.equalsIgnoreCase("FIN")) 
+    public void processMessage() throws InterruptedException {
+        //In this case
+    	if(!currentMessage.equalsIgnoreCase("FIN"))
         {
                 Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
         }
     }
-
 
     /**
      * The message is emitted to the destination buffer after its been modified and the needed time has passed.
@@ -111,13 +110,6 @@ public class ProducerConsumer  extends Thread {
         else
             destinationBuffer.putMessagePassive(currentMessage);
     }
-    
-    
-    
-    
-    
-    
-    
 
     /**
      * The run method that the thread will execute
