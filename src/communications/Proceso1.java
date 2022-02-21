@@ -174,6 +174,7 @@ public class Proceso1  extends Thread
         Date currDate = new Date();
         String fileName = String.format("results-%d",currDate.getTime());//gets date time in miliseconds
         createNewResultsFile(fileName);
+        writeToNewResultsFile(fileName);
     }
 
     public void createNewResultsFile(String fileName){
@@ -198,7 +199,7 @@ public class Proceso1  extends Thread
 
             //WRITE RESULT
             for(int i = 0 ; i < wordListReceived.size();i++){
-                fileWriter.write(String.format( "Message %d : %s", i ,wordListReceived.get(i)));
+                fileWriter.write(String.format( "Message %d : %s \n", i ,wordListReceived.get(i)));
             }
 
             //CLOSE FILE
@@ -216,7 +217,7 @@ public class Proceso1  extends Thread
         System.out.println("");
         System.out.println("These are the messages received , in order:");
         for (int i = 0 ; i < wordListReceived.size();i++){
-            String formattedOutput = String.format("Message %d conent: %s",i,wordListReceived.get(i));
+            String formattedOutput = String.format("Message %d conent: %s",i+1,wordListReceived.get(i));
             System.out.println(formattedOutput);
         }
 

@@ -112,7 +112,6 @@ public class Main {
             Buffer newBuffer = createBuffer(rawInput.get(i));
             bufferList.put(newBuffer.getBufferId(),newBuffer);
             buffers_max_capacity=newBuffer.getMaxCapacity();
-            System.out.println(newBuffer.toString());
         }
 
         //Create process 1
@@ -156,7 +155,6 @@ public class Main {
             ProducerConsumer newProducerConsumer = new ProducerConsumer(originBuffer,destinationBuffer,"",pcId,activeReception,activeEmission, sleepTimeMilli );
             //This only contains producerConsumers 2-4
             producerConsumersList.put(Long.toString(newProducerConsumer.getPcId()),newProducerConsumer);
-            System.out.println(newProducerConsumer.toString());
         }
     }
 
