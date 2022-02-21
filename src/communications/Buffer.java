@@ -24,9 +24,6 @@ public class Buffer {
      */
     private String bufferId;
 
-    //TODO: Remove this before submitting
-    //public final Object monitor;//redundant I just need to synchronize over the objects linked list size (or the linked list itself)
-
     //-------------------------------------------------------------------------------------------------
     // CONSTRUCTOR
     //-------------------------------------------------------------------------------------------------
@@ -40,16 +37,13 @@ public class Buffer {
         this.bufferId = bufferId;
         this.maxCapacity = maxCapacity;
         this.bufferContent = new LinkedList<>();
-        //this.monitor = new Object();//TODO: Remove this before submitting
     }
 
     //-------------------------------------------------------------------------------------------------
     // CORE METHODS
     //-------------------------------------------------------------------------------------------------
 
-    //TODO: JUSTIFY THE NOTIFY -> Basically at any given time i think its impossible for both a put message and pop message to send the threads to the monitor this ensures that there is never a chance of a deadlock (both waitning to be woken up, if they are passive). Another thing is that as producer ocnsumer is a thread and a buffer concets two trheads at a time only this implies that notify is enough , because at any given time there can only be one thread in the monitors waiting list so it will wake up exactly the thread that we want.
-    //TODO: LAST CHECKS ON SYNCHRONIZED
-
+    // JUSTIFY THE NOTIFY -> Basically at any given time i think its impossible for both a put message and pop message to send the threads to the monitor this ensures that there is never a chance of a deadlock (both waitning to be woken up, if they are passive). Another thing is that as producer ocnsumer is a thread and a buffer concets two trheads at a time only this implies that notify is enough , because at any given time there can only be one thread in the monitors waiting list so it will wake up exactly the thread that we want.
     //The communication type of the incoming producerConsumer is active -> yield()
     //The communication type of the incoming producerConsumer is passive -> wait()
 
@@ -108,7 +102,7 @@ public class Buffer {
      * @return String containing the message that was removed from the buffer
      * @throws InterruptedException exception
      */
-    //TODO: Yield active methods cant be syncronized, only get current capacity can be
+    // Yield active methods cant be syncronized, only get current capacity can be syncronized
     public String popMessageActive()throws InterruptedException{
         while(getCurrentCapacity() == 0){
             Thread.yield();
@@ -162,7 +156,6 @@ public class Buffer {
      * Each instance of the class gets syncronized over the value of the current size of the linked list
      * @return int, the number of elements in the bufferContent linkedList
      */
-    //TODO: REVISAR SI ENSERIO TOCA TENER ESTE SYNCRONIZED (O SI USO REFERENCIA DIRECTA DENTRO DE LOS CORE METHODS Y DEJO ESTE PARA QUE LO USEN PARA OTROS PROPOSITOS)
     public synchronized int getCurrentCapacity() {
         return getBufferContent().size();
     }

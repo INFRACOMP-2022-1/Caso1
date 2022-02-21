@@ -15,9 +15,6 @@ public class Main {
     // ATTRIBUTES
     //-------------------------------------------------------------------------------------------------
 
-    //TODO ; Terminar configuracion y poner algo para poner a correr los processos y coordinarlos
-    //TODO: TERMINAR LA EJECUCION DE LOS PROCESOS ,USAR BARRERASCICLICAS O ALGO
-
     public final static String fileName = "Caso1/inputFile.txt";
 
     public static HashMap<String,Buffer> bufferList;
