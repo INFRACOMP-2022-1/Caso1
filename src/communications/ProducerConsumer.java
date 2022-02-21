@@ -88,12 +88,9 @@ public class ProducerConsumer  extends Thread {
      * by sending the thread to sleep by a determined time length.
      * @throws InterruptedException 
      */
-    
-    
     public void processMessage() throws InterruptedException {
-        //In this case
-    	if(!currentMessage.equalsIgnoreCase("FIN"))
-        {
+        //In this case the process message wont do anything if the message content is FIN
+        if(!currentMessage.equalsIgnoreCase("FIN")) {
                 Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
         }
