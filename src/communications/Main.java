@@ -30,7 +30,7 @@ public class Main {
     
     public static int buffers_max_capacity;
     
-    public static ArrayList<String> wordList;
+    public static ArrayList<String> wordList = new ArrayList<>();
     
 
 

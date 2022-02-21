@@ -196,7 +196,7 @@ public class Proceso1  extends Thread
             String fileRoute = String.format("Caso1/outputFiles/%s.txt", fileName);
             FileWriter fileWriter = new FileWriter(fileRoute);
 
-            //WRITE
+            //WRITE RESULT
             for(int i = 0 ; i < wordListReceived.size();i++){
                 fileWriter.write(String.format( "Message %d : %s", i ,wordListReceived.get(i)));
             }

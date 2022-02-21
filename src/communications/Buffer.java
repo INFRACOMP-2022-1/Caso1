@@ -68,7 +68,10 @@ public class Buffer {
 
         storeMessage(message); //Stores the received message in the buffer content linked list
 
-        notify(); //notifies a random producerConsumer in monitor queue to wake up
+        synchronized (this){
+            notify();
+        }
+        //notify(); //notifies a random producerConsumer in monitor queue to wake up
     }
 
     /**
@@ -90,7 +93,10 @@ public class Buffer {
 
         storeMessage(message); //Stores the received message in the buffer content linked list
 
-        notify(); //notifies a random producerConsumer in monitor queue to wake up
+        synchronized (this){
+            notify();
+        }
+        //notify(); //notifies a random producerConsumer in monitor queue to wake up
     }
 
     /**
@@ -110,7 +116,10 @@ public class Buffer {
 
         String message = sendMessage();
 
-        notify();//As we don't know if the previous thread is passive or active we have to notify just in case it was passive and its in waiting mode
+        synchronized (this){
+            notify();
+        }
+        //notify();//As we don't know if the previous thread is passive or active we have to notify just in case it was passive and its in waiting mode
 
         return message;
     }
@@ -134,8 +143,12 @@ public class Buffer {
         }
 
         String message = sendMessage();
-        //As we don't know if the previous thread is passive or active we have to notify just in case it was passive and its in waiting mode
-        notify();
+
+        synchronized (this){
+            notify();
+        }
+        //notify();//As we don't know if the previous thread is passive or active we have to notify just in case it was passive and its in waiting mode
+
 
         return message;
     }
