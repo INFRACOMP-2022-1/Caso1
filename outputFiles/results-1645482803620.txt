@@ -1,4 +1,0 @@
-Message 0 : msg1 2AA 3PA 4PP 
-Message 1 : msg2 2AA 3PA 4PP 
-Message 2 : msg3 2AA 3PA 4PP 
-Message 3 : FIN 

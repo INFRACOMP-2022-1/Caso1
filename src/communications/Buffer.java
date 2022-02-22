@@ -107,14 +107,11 @@ public class Buffer {
         while(getCurrentCapacity() == 0){
             Thread.yield();
         }
-
         String message = sendMessage();
-
         synchronized (this){
             notify();
         }
         //notify();//As we don't know if the previous thread is passive or active we have to notify just in case it was passive and its in waiting mode
-
         return message;
     }
 

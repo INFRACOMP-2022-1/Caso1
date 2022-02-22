@@ -25,9 +25,11 @@ public class Main {
 
     public static int numberOfMessages;
     
-    public static int buffers_max_capacity;
+    public static int buffersMaxCapacity = 0;
     
     public static ArrayList<String> wordList = new ArrayList<>();
+
+    public static ArrayList<String> rawInput;
     
 
 
@@ -52,7 +54,7 @@ public class Main {
 
         //checks if the number of messages to be sent goes over total buffer capacity
 
-        while(numberOfMessages>buffers_max_capacity) {
+        while(numberOfMessages> buffersMaxCapacity) {
         	 System.out.println("the number of messages you want to send is greater than the total buffer storage");
         	 scanConsoleInputNumberMessages();
         }
@@ -76,7 +78,6 @@ public class Main {
         startAllThreads();
 
         System.out.println("");
-        System.out.println("Goodbye.");
         //Once the messages have finished cycling through a message will be printed from Process 1 with all the messages and the trace produced
     }
 
@@ -99,7 +100,7 @@ public class Main {
      * Parses the content of the inputFile.txt creates the corresponding buffers and producer consumers
      */
     public static void parseConsoleInput(){
-        ArrayList<String> rawInput = readInputFile();
+        rawInput = readInputFile();
         bufferList = new HashMap<>();
         producerConsumersList = new HashMap<>();
 
@@ -108,7 +109,7 @@ public class Main {
         for(int i = 0; i< 4;i++){
             Buffer newBuffer = createBuffer(rawInput.get(i));
             bufferList.put(newBuffer.getBufferId(),newBuffer);
-            buffers_max_capacity=newBuffer.getMaxCapacity();
+            buffersMaxCapacity +=newBuffer.getMaxCapacity();
         }
 
         //Create process 1
@@ -130,7 +131,7 @@ public class Main {
         boolean activeEmission = Boolean.parseBoolean(splitProducerConsumer[3]);
 
         //Creates new process 1 and intiializes the atribute
-        process1 = new Proceso1(originBufferP1,destinationBufferP1,pcId,"",activeReception,activeEmission,sleepTimeMilli,wordList);
+        process1 = new Proceso1(originBufferP1,destinationBufferP1,pcId,"",activeReception,activeEmission,sleepTimeMilli,wordList,rawInput);
     }
 
     public static void createProducerConsumer(ArrayList<String> rawInput){

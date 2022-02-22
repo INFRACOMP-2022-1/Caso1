@@ -13,6 +13,11 @@ public class Proceso1  extends Thread
     //-------------------------------------------------------------------------------------------------
 
     /*
+     * When on all the sysouts are enabled
+     */
+    private static final boolean debugMode = true;
+
+    /*
     The buffer from which the message is received by the producer consumer
      */
     private Buffer originBuffer;
@@ -57,6 +62,11 @@ public class Proceso1  extends Thread
      */
     private String currentMessage;
 
+    /*
+    Has the specified parameters for which the class was ran with
+     */
+    private ArrayList<String> rawInput;
+
 
     //-------------------------------------------------------------------------------------------------
     // CONSTRUCTOR
@@ -70,8 +80,9 @@ public class Proceso1  extends Thread
      * @param activeReception if the communication type for reception of messages from the origin buffer is active, if it's not its passive
      * @param activeEmission if the communication type for emission of messages from the origin buffer is active, if it's not its passive
      * @param sleepTime the time in milliseconds that the thread is sent to sleep when it's "processing" the message before sending it
+     * @param rawInput the raw input with all the parameters used to set up the buffers and proceses
      */
-    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, long pcId,String currentMessage, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> wordListSend)
+    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, long pcId,String currentMessage, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> wordListSend, ArrayList<String>rawInput)
     {
         this.originBuffer = originBuffer;
         this.destinationBuffer = destinationBuffer;
@@ -82,6 +93,7 @@ public class Proceso1  extends Thread
         this.wordListSend = wordListSend;
         this.currentMessage = currentMessage;
         this.wordListReceived = new ArrayList<>();//Starts out empty
+        this.rawInput = rawInput;
     }
 
     //-------------------------------------------------------------------------------------------------
@@ -98,8 +110,8 @@ public class Proceso1  extends Thread
     {
     	for(int i = 0; i< wordListSend.size(); i++)
     	{
-    		String palabra= wordListSend.get(i);
-    		emmitMessage(palabra);
+    		String message= wordListSend.get(i);
+    		emmitMessage(message);
     	}
         emmitMessage("FIN");
     }
@@ -110,8 +122,11 @@ public class Proceso1  extends Thread
      * @throws InterruptedException
      */
     public void receiveMessage() throws InterruptedException {
-        String receivedMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
-        wordListReceived.add(receivedMessage);
+        currentMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
+
+        if(debugMode){
+            System.out.println(String.format("Message received from process 1: %s", currentMessage));
+        }
     }
 
     /**
@@ -124,6 +139,11 @@ public class Proceso1  extends Thread
         if(!currentMessage.equals("FIN")){
             Thread.sleep(getSleepTime());
             currentMessage = formatMessage();
+            wordListReceived.add(currentMessage);
+        }
+
+        if(debugMode){
+            System.out.println(String.format("Message processed at process 1: %s", currentMessage));
         }
     }
 
@@ -137,6 +157,10 @@ public class Proceso1  extends Thread
             destinationBuffer.putMessageActive(message);
         else
             destinationBuffer.putMessagePassive(message);
+
+        if(debugMode){
+            System.out.println(String.format("Message emmited at process 1: %s", message));
+        }
     }
 
     /**
@@ -197,9 +221,21 @@ public class Proceso1  extends Thread
             String fileRoute = String.format("Caso1/outputFiles/%s.txt", fileName);
             FileWriter fileWriter = new FileWriter(fileRoute);
 
+            //WRITE CONFIGURATION
+            System.out.println("These are the parameters for the buffers and producer consumers");
+            for(int i = 0; i<rawInput.size();i++){
+                fileWriter.write(rawInput.get(i) + "\n");
+            }
+
+            //WRITE SENT MESSAGES
+            System.out.println("These are the messages that were sent");
+            for(int i = 0; i<wordListSend.size();i++){
+                fileWriter.write(String.format("Original Message %d: %s \n", i + 1, wordListSend.get(i) ));
+            }
+
             //WRITE RESULT
             for(int i = 0 ; i < wordListReceived.size();i++){
-                fileWriter.write(String.format( "Message %d : %s \n", i ,wordListReceived.get(i)));
+                fileWriter.write(String.format( "Message %d : %s \n", i + 1 ,wordListReceived.get(i)));
             }
 
             //CLOSE FILE
