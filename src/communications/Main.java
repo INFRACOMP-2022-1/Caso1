@@ -30,8 +30,11 @@ public class Main {
     public static ArrayList<String> wordList = new ArrayList<>();
 
     public static ArrayList<String> rawInput;
-    
 
+    /*
+    TO TEST
+     */
+    public static boolean debugMode = true;
 
 
     //-------------------------------------------------------------------------------------------------
@@ -42,6 +45,7 @@ public class Main {
         //RUN CONSOLE AND RETURN THE RESULTING INFORMATION
 
         System.out.println("THE CONFIGURATION FOR THE PROCESSES AND THE BUFFERS MUST BE PUT IN THE inputFile.txt WITH THE SPECIFIED PATTERN GIVEN IN THE CASE SPECIFICATIONS ");
+
 
         //Parses the input file txt content and creates the producerConsumers and the Buffers
         parseConsoleInput();
@@ -131,7 +135,7 @@ public class Main {
         boolean activeEmission = Boolean.parseBoolean(splitProducerConsumer[3]);
 
         //Creates new process 1 and intiializes the atribute
-        process1 = new Proceso1(originBufferP1,destinationBufferP1,pcId,"",activeReception,activeEmission,sleepTimeMilli,wordList,rawInput);
+        process1 = new Proceso1(originBufferP1,destinationBufferP1,pcId,"",activeReception,activeEmission,sleepTimeMilli,wordList,rawInput, debugMode);
     }
 
     public static void createProducerConsumer(ArrayList<String> rawInput){
@@ -150,7 +154,7 @@ public class Main {
             boolean activeReception = Boolean.parseBoolean(splitProducerConsumer[2]);
             boolean activeEmission = Boolean.parseBoolean(splitProducerConsumer[3]);
 
-            ProducerConsumer newProducerConsumer = new ProducerConsumer(originBuffer,destinationBuffer,"",pcId,activeReception,activeEmission, sleepTimeMilli );
+            ProducerConsumer newProducerConsumer = new ProducerConsumer(originBuffer,destinationBuffer,"",pcId,activeReception,activeEmission, sleepTimeMilli, debugMode );
             //This only contains producerConsumers 2-4
             producerConsumersList.put(Long.toString(newProducerConsumer.getPcId()),newProducerConsumer);
         }
@@ -165,7 +169,12 @@ public class Main {
        Scanner sc = new Scanner(System.in);
        System.out.println("Enter the number of messages to be sent by process 1: ");
        numberOfMessages = sc.nextInt();
-       
+    }
+
+    public static void scanConsoleInputBoolean(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter werther you want to acces debug mode: ");
+        debugMode = sc.nextBoolean();
     }
 
     

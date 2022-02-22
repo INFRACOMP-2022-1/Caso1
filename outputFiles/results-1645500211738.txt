@@ -1,0 +1,35 @@
+
+CONFIGURATION
+A 6
+B 1
+C 10
+D 4
+1 20 true false
+2 40 true true
+3 60 false true
+4 80 false false
+
+WRITE SENT MESSAGES
+Original Message 1: oh 
+Original Message 2: gloria 
+Original Message 3: inmarcesible 
+Original Message 4: oh 
+Original Message 5: jubilo 
+Original Message 6: inmortal 
+Original Message 7: en 
+Original Message 8: surcos 
+Original Message 9: de 
+Original Message 10: dolores 
+
+RESULTS
+Message 1 : oh 2AA 3PA 4PP 1AP 
+Message 2 : gloria 2AA 3PA 4PP 1AP 
+Message 3 : inmarcesible 2AA 3PA 4PP 1AP 
+Message 4 : oh 2AA 3PA 4PP 1AP 
+Message 5 : jubilo 2AA 3PA 4PP 1AP 
+Message 6 : inmortal 2AA 3PA 4PP 1AP 
+Message 7 : en 2AA 3PA 4PP 1AP 
+Message 8 : surcos 2AA 3PA 4PP 1AP 
+Message 9 : de 2AA 3PA 4PP 1AP 
+Message 10 : dolores 2AA 3PA 4PP 1AP 
+

@@ -1,0 +1,35 @@
+
+CONFIGURATION
+A 10
+B 1
+C 10
+D 1
+1 20 true false
+2 40 true true
+3 60 false true
+4 80 false false
+
+WRITE SENT MESSAGES
+Original Message 1: mezclamos 
+Original Message 2: la 
+Original Message 3: leche 
+Original Message 4: huevos 
+Original Message 5: azucar 
+Original Message 6: extracto 
+Original Message 7: de 
+Original Message 8: vainilla 
+Original Message 9: zumo 
+Original Message 10: de 
+
+RESULTS
+Message 1 : mezclamos 2AA 3PA 4PP 1AP 
+Message 2 : la 2AA 3PA 4PP 1AP 
+Message 3 : leche 2AA 3PA 4PP 1AP 
+Message 4 : huevos 2AA 3PA 4PP 1AP 
+Message 5 : azucar 2AA 3PA 4PP 1AP 
+Message 6 : extracto 2AA 3PA 4PP 1AP 
+Message 7 : de 2AA 3PA 4PP 1AP 
+Message 8 : vainilla 2AA 3PA 4PP 1AP 
+Message 9 : zumo 2AA 3PA 4PP 1AP 
+Message 10 : de 2AA 3PA 4PP 1AP 
+

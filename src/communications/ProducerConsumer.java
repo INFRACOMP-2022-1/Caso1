@@ -1,11 +1,22 @@
 package communications;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProducerConsumer  extends Thread {
     //-------------------------------------------------------------------------------------------------
     // ATTRIBUTES
     //-------------------------------------------------------------------------------------------------
+
+    /*
+    debug mode
+     */
+    private boolean debugMode;
+
+    /*
+    colors
+     */
+    private HashMap<Long,String> colors = new HashMap<Long, String>();
 
     /*
     The buffer from which the message is received by the producer consumer
@@ -57,8 +68,7 @@ public class ProducerConsumer  extends Thread {
      * @param activeEmission if the communication type for emission of messages from the origin buffer is active, if it's not its passive
      * @param sleepTime the time in milliseconds that the thread is sent to sleep when it's "processing" the message before sending it
      */
-    public ProducerConsumer(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime)
-    {
+    public ProducerConsumer(Buffer originBuffer, Buffer destinationBuffer, String currentMessage, long pcId, boolean activeReception, boolean activeEmission, int sleepTime, boolean debugMode) {
         this.originBuffer = originBuffer;
         this.destinationBuffer = destinationBuffer;
         this.currentMessage = currentMessage;
@@ -66,6 +76,12 @@ public class ProducerConsumer  extends Thread {
         this.activeReception = activeReception;
         this.activeEmission = activeEmission;
         this.sleepTime = sleepTime;
+        this.debugMode = debugMode;
+
+        //Assigns colour
+        colors.put(2L,ANSI_BLUE);
+        colors.put(3L,ANSI_GREEN);
+        colors.put(4L,ANSI_YELLOW);
     }
 
     //-------------------------------------------------------------------------------------------------
@@ -80,6 +96,10 @@ public class ProducerConsumer  extends Thread {
      */
     public void receiveMessage() throws InterruptedException {
         currentMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
+
+        if(debugMode){
+            System.out.println(String.format("%s Message received from process %d: %s",colors.get(getPcId()), getPcId(), currentMessage));
+        }
     }
 
     /**
@@ -89,10 +109,14 @@ public class ProducerConsumer  extends Thread {
      * @throws InterruptedException 
      */
     public void processMessage() throws InterruptedException {
-        //In this case the process message wont do anything if the message content is FIN
+        //In this case the process message won't do anything if the message content is FIN
         if(!currentMessage.equalsIgnoreCase("FIN")) {
                 Thread.sleep(getSleepTime());
                 currentMessage = formatMessage();//modifies the currentMessage string
+        }
+
+        if(debugMode){
+            System.out.println(String.format("%s Message processed at process %d : %s",colors.get(getPcId()), getPcId() , currentMessage));
         }
     }
 
@@ -106,6 +130,10 @@ public class ProducerConsumer  extends Thread {
             destinationBuffer.putMessageActive(currentMessage);
         else
             destinationBuffer.putMessagePassive(currentMessage);
+
+        if(debugMode){
+            System.out.println(String.format("%s Message emmited at process %d : %s",colors.get(getPcId()), getPcId(), currentMessage));
+        }
     }
 
     /**
@@ -197,4 +225,18 @@ public class ProducerConsumer  extends Thread {
     public void setSleepTime(int sleepTime) {
         this.sleepTime = sleepTime;
     }
+
+    //-------------------------------------------------------------------------------------------------
+    // PRETTY COLOURS
+    //-------------------------------------------------------------------------------------------------
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 }

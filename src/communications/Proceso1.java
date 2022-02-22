@@ -3,6 +3,7 @@ package communications;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileStore;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,7 +16,12 @@ public class Proceso1  extends Thread
     /*
      * When on all the sysouts are enabled
      */
-    private static final boolean debugMode = true;
+    private static boolean debugMode;
+
+    /*
+    Asigns colour to the debug lines
+     */
+    private String colour = ANSI_RED;
 
     /*
     The buffer from which the message is received by the producer consumer
@@ -82,7 +88,7 @@ public class Proceso1  extends Thread
      * @param sleepTime the time in milliseconds that the thread is sent to sleep when it's "processing" the message before sending it
      * @param rawInput the raw input with all the parameters used to set up the buffers and proceses
      */
-    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, long pcId,String currentMessage, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> wordListSend, ArrayList<String>rawInput)
+    public Proceso1(Buffer originBuffer, Buffer destinationBuffer, long pcId,String currentMessage, boolean activeReception, boolean activeEmission, int sleepTime, ArrayList<String> wordListSend, ArrayList<String>rawInput, boolean debugMode)
     {
         this.originBuffer = originBuffer;
         this.destinationBuffer = destinationBuffer;
@@ -94,6 +100,7 @@ public class Proceso1  extends Thread
         this.currentMessage = currentMessage;
         this.wordListReceived = new ArrayList<>();//Starts out empty
         this.rawInput = rawInput;
+        this.debugMode = debugMode;
     }
 
     //-------------------------------------------------------------------------------------------------
@@ -125,7 +132,7 @@ public class Proceso1  extends Thread
         currentMessage = (activeReception) ? originBuffer.popMessageActive() : originBuffer.popMessagePassive();
 
         if(debugMode){
-            System.out.println(String.format("Message received from process 1: %s", currentMessage));
+            System.out.println(String.format("%s Message received from process 1: %s",colour, currentMessage));
         }
     }
 
@@ -143,7 +150,7 @@ public class Proceso1  extends Thread
         }
 
         if(debugMode){
-            System.out.println(String.format("Message processed at process 1: %s", currentMessage));
+            System.out.println(String.format("%s Message processed at process 1: %s",colour, currentMessage));
         }
     }
 
@@ -159,7 +166,7 @@ public class Proceso1  extends Thread
             destinationBuffer.putMessagePassive(message);
 
         if(debugMode){
-            System.out.println(String.format("Message emmited at process 1: %s", message));
+            System.out.println(String.format("%s Message emmited at process 1: %s", colour, message));
         }
     }
 
@@ -221,11 +228,19 @@ public class Proceso1  extends Thread
             String fileRoute = String.format("Caso1/outputFiles/%s.txt", fileName);
             FileWriter fileWriter = new FileWriter(fileRoute);
 
+            fileWriter.write("\n");
+            fileWriter.write("CONFIGURATION");
+            fileWriter.write("\n");
+
             //WRITE CONFIGURATION
             System.out.println("These are the parameters for the buffers and producer consumers");
             for(int i = 0; i<rawInput.size();i++){
                 fileWriter.write(rawInput.get(i) + "\n");
             }
+
+            fileWriter.write("\n");
+            fileWriter.write("WRITE SENT MESSAGES");
+            fileWriter.write("\n");
 
             //WRITE SENT MESSAGES
             System.out.println("These are the messages that were sent");
@@ -233,10 +248,16 @@ public class Proceso1  extends Thread
                 fileWriter.write(String.format("Original Message %d: %s \n", i + 1, wordListSend.get(i) ));
             }
 
+            fileWriter.write("\n");
+            fileWriter.write("RESULTS");
+            fileWriter.write("\n");
+
             //WRITE RESULT
             for(int i = 0 ; i < wordListReceived.size();i++){
                 fileWriter.write(String.format( "Message %d : %s \n", i + 1 ,wordListReceived.get(i)));
             }
+
+            fileWriter.write("\n");
 
             //CLOSE FILE
             fileWriter.close();
@@ -246,10 +267,9 @@ public class Proceso1  extends Thread
         }
     }
 
-
     public void printResults(){
         System.out.println("");
-        System.out.println("EXECUTION RESULTS");
+        System.out.println( ANSI_RESET + "EXECUTION RESULTS");
         System.out.println("");
         System.out.println("These are the messages received , in order:");
         for (int i = 0 ; i < wordListReceived.size();i++){
@@ -316,6 +336,20 @@ public class Proceso1  extends Thread
     public void setSleepTime(int sleepTime) {
         this.sleepTime = sleepTime;
     }
+
+    //-------------------------------------------------------------------------------------------------
+    // PRETTY COLOURS
+    //-------------------------------------------------------------------------------------------------
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
 }
 
 
