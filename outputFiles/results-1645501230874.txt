@@ -1,0 +1,55 @@
+
+CONFIGURATION
+A 10
+B 1
+C 10
+D 1
+1 20 true false
+2 40 true true
+3 60 false true
+4 80 false false
+
+WRITE SENT MESSAGES
+Original Message 1: did 
+Original Message 2: you 
+Original Message 3: ever 
+Original Message 4: hear 
+Original Message 5: the 
+Original Message 6: tragedy 
+Original Message 7: of 
+Original Message 8: darth 
+Original Message 9: plagueis 
+Original Message 10: the 
+Original Message 11: wise 
+Original Message 12: ? 
+Original Message 13: i 
+Original Message 14: thought 
+Original Message 15: not 
+Original Message 16: a 
+Original Message 17: story 
+Original Message 18: the 
+Original Message 19: jedi 
+Original Message 20: would 
+
+RESULTS
+Message 1 : did 2AA 3PA 4PP 1AP 
+Message 2 : you 2AA 3PA 4PP 1AP 
+Message 3 : ever 2AA 3PA 4PP 1AP 
+Message 4 : hear 2AA 3PA 4PP 1AP 
+Message 5 : the 2AA 3PA 4PP 1AP 
+Message 6 : tragedy 2AA 3PA 4PP 1AP 
+Message 7 : of 2AA 3PA 4PP 1AP 
+Message 8 : darth 2AA 3PA 4PP 1AP 
+Message 9 : plagueis 2AA 3PA 4PP 1AP 
+Message 10 : the 2AA 3PA 4PP 1AP 
+Message 11 : wise 2AA 3PA 4PP 1AP 
+Message 12 : ? 2AA 3PA 4PP 1AP 
+Message 13 : i 2AA 3PA 4PP 1AP 
+Message 14 : thought 2AA 3PA 4PP 1AP 
+Message 15 : not 2AA 3PA 4PP 1AP 
+Message 16 : a 2AA 3PA 4PP 1AP 
+Message 17 : story 2AA 3PA 4PP 1AP 
+Message 18 : the 2AA 3PA 4PP 1AP 
+Message 19 : jedi 2AA 3PA 4PP 1AP 
+Message 20 : would 2AA 3PA 4PP 1AP 
+
