@@ -18,5 +18,4 @@ CyclicBarrier.
 El projecto consiste en implementar una arquitectura de buzones y threads en el cual se evalua el uso y conocimiento de concurrencia.
 
 ## Datos adicionales
-El reporte de este caso se puede encontrar en la ruta reporte-caso/ReporteCaso3.pdf
-Si se quiere consultar el enunciado del caso este se puede encontrar en la ruta reporte-caso/Enunciado.pdf
+El reporte de este caso se puede encontrar en la ruta docs/Reporte.pdf
